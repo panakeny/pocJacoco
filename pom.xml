@@ -16,6 +16,10 @@
 		<app.runtime>4.4.0-20220523</app.runtime>
 		<mule.maven.plugin.version>3.5.4</mule.maven.plugin.version>
 		<munit.version>2.3.9</munit.version>
+		
+		<sonar.organization>panakeny</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
 	</properties>
 
 	<build>
