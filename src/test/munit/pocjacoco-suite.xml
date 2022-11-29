@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="pocjacoco-suite.xml" />
+	<munit:test name="pocjacocoFlow-test" doc:id="4474cf8e-9f4a-4831-a1df-d993b03432e4" >
+		<munit:behavior >
+			<munit-tools:spy doc:name="Spy Logger" doc:id="0121c24f-9ad4-495d-af8e-10f1364254db" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="568a9b97-fe55-4de4-8c4c-8de3cfb854a9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="fb09b17a-4887-4342-8f8e-a347dd0aaaab" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import pocjacocoFlowtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="a2209a0a-4b42-4c4a-b507-15735bbb404f" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import pocjacocoFlowtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="a8d74d36-49ef-4fa6-b48f-89dd393e2e2c" >
+				<munit:payload value="#[readUrl('classpath://pocjacocoFlowtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://pocjacocoFlowtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to pocjacocoFlow" doc:id="aa3e5ef9-e059-48d7-a8b6-1f58615c273e" name="pocjacocoFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="68a22a0a-a52e-479a-bfba-695a809e0faf" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import pocjacocoFlowtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Set Payload" doc:id="4a9443d4-b1f0-44df-af65-894109e6690f" processor="set-payload" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="61d7c32c-f9ef-4f2a-8581-fd77ec365409" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="64deb9a2-2960-4ab5-a51f-252dac78e55b" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="568a9b97-fe55-4de4-8c4c-8de3cfb854a9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
