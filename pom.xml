@@ -51,6 +51,7 @@
                </coverage>
             </configuration>
          </plugin>
+      <!--
          <plugin>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
@@ -66,6 +67,7 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.8.1</version>
          </plugin>
+      -->
       </plugins>
    </build>
    <dependencies>
